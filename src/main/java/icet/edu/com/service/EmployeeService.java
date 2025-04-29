@@ -1,6 +1,7 @@
 package icet.edu.com.service;
 
 import icet.edu.com.dto.EmployeeDto;
+import icet.edu.com.util.Department;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface EmployeeService {
     Boolean deleteEmployee(Long id);
     List<EmployeeDto> getAllEmployees();
     Boolean updateEmployee(Long id, EmployeeDto employeeDto);
-    List<EmployeeDto> getEmployeesByDepartment(String department);
+    List<EmployeeDto> getEmployeesByDepartment(Department department);
     List<EmployeeDto> getEmployeesByName(String name);
     List<EmployeeDto> getEmployeesBySalaryRange(Double minSalary, Double maxSalary);
     List<EmployeeDto> getEmployeesByPhoneNumber(String phoneNumber);

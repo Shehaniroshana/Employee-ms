@@ -4,6 +4,7 @@ import icet.edu.com.dto.EmployeeDto;
 import icet.edu.com.entity.EmployeeEntity;
 import icet.edu.com.repository.EmployeeRepository;
 import icet.edu.com.service.EmployeeService;
+import icet.edu.com.util.Department;
 import icet.edu.com.util.EmailCheck;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -60,22 +61,38 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDto> getEmployeesByDepartment(String department) {
-        return List.of();
+    public List<EmployeeDto> getEmployeesByDepartment(Department department) {
+        List<EmployeeDto> all = new ArrayList<>();
+        for (EmployeeEntity employeeEntity: repository.findByDepartment(department)) {
+            all.add(mapper.map(employeeEntity, EmployeeDto.class));
+        }
+        return all;
     }
 
     @Override
     public List<EmployeeDto> getEmployeesByName(String name) {
-        return List.of();
+        List<EmployeeDto> all = new ArrayList<>();
+        for (EmployeeEntity employeeEntity: repository.findByNameContaining(name)) {
+            all.add(mapper.map(employeeEntity, EmployeeDto.class));
+        }
+        return all;
     }
 
     @Override
     public List<EmployeeDto> getEmployeesBySalaryRange(Double minSalary, Double maxSalary) {
-        return List.of();
+        List<EmployeeDto> all = new ArrayList<>();
+        for (EmployeeEntity employeeEntity: repository.findBySalaryBetween(minSalary, maxSalary)) {
+            all.add(mapper.map(employeeEntity, EmployeeDto.class));
+        }
+        return all;
     }
 
     @Override
     public List<EmployeeDto> getEmployeesByPhoneNumber(String phoneNumber) {
-        return List.of();
+        List<EmployeeDto> all = new ArrayList<>();
+        for (EmployeeEntity employeeEntity: repository.findByPhoneNumber(phoneNumber)) {
+            all.add(mapper.map(employeeEntity, EmployeeDto.class));
+        }
+        return all;
     }
 }
