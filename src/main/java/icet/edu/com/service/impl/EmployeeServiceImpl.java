@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,17 +40,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Boolean deleteEmployee(Long id) {
-        return false;
+        if (id == null || !repository.existsById(id)) return false;
+        repository.deleteById(id);
+        return !repository.existsById(id);
     }
 
     @Override
     public List<EmployeeDto> getAllEmployees() {
-        return List.of();
+       List<EmployeeDto> all=new ArrayList<>();
+       repository.findAll().forEach(employeeEntity -> all.add(mapper.map(employeeEntity, EmployeeDto.class)));
+       return all;
     }
 
     @Override
     public Boolean updateEmployee(Long id, EmployeeDto employeeDto) {
-        return false;
+        if (id == null || employeeDto == null || !repository.existsById(id)) return false;
+        repository.save(mapper.map(employeeDto, EmployeeEntity.class));
+        return true;
     }
 
     @Override
