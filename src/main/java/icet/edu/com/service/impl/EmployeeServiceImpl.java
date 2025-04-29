@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Boolean saveEmployee(EmployeeDto employeeDto) {
          if(repository.findByEmail(employeeDto.getEmail()) != null && check.isValid(employeeDto.getEmail())) return false;
+        employeeDto.setCreatedAt(LocalDateTime.now());
+        employeeDto.setUpdatedAt(LocalDateTime.now());
          repository.save(mapper.map(employeeDto, EmployeeEntity.class));
          return true;
     }
@@ -56,6 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Boolean updateEmployee(Long id, EmployeeDto employeeDto) {
         if (id == null || employeeDto == null || !repository.existsById(id)) return false;
+        employeeDto.setUpdatedAt(LocalDateTime.now());
         repository.save(mapper.map(employeeDto, EmployeeEntity.class));
         return true;
     }
